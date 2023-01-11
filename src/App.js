@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import moment from "moment/moment";
+import { useState } from "react";
+
 
 function App() {
+  const [from,setFrom] = useState('')
+  const [fromTime,setFromTime] = useState('')
+  const [duration,setDuration] = useState('')
+  const [toDate,setToDate] = useState('')
+
+  function calculate(e){
+e.preventDefault()
+ setToDate(moment(from,"YYYY-MM-DD").add(duration,'days').format('YYYY-MM-DD'))
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form className="main" onSubmit={calculate}>
+        <div className="from_date">
+          <label htmlFor="from">From : </label>
+          <input type="date" id="from" onChange={(e)=>{setFrom(e.target.value)}} />
+          <input type="time" onChange={(e)=>{setFromTime(e.target.value)}}/>
+        </div>
+        <div className="duration">
+         Duration :  <input type="number" onChange={(e)=>setDuration(e.target.value)}/>
+        </div>
+        <div className="to_date">
+          <label htmlFor="to">To : </label>
+          <input type="date" id="to" value={toDate} />
+          <input type="time" value={fromTime}/>
+        </div>
+        <div style={{textAlign:'center'}}>
+        <button className="btn">Calculate</button>
+        </div>
+      </form>
+
     </div>
   );
 }
